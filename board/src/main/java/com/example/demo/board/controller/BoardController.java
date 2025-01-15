@@ -65,7 +65,7 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/modify","/get"})
-	public void modify(@RequestParam(name="bno") Long bno, Model model) {
+	public void modify(@RequestParam Long bno, Model model) {
 		BoardDTO board = service.get(bno);
 		model.addAttribute("board", board);
 	}
@@ -81,7 +81,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/remove") //삭제요청 호출(파라미터 가지고)
-	public String remove(@RequestParam(name="bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam Long bno, RedirectAttributes rttr) {
 		log.info("remove: " + bno);
 		service.remove(bno);
 		
