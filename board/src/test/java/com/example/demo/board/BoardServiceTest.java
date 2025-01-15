@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.board.service.BoardDto;
+import com.example.demo.board.service.BoardDTO;
 import com.example.demo.board.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class BoardServiceTest {
 	public void update() {
 		//given
 		//실행전 존재하는 번호인지 확인할 것
-		BoardDto board = BoardDto.builder()
+		BoardDTO board = BoardDTO.builder()
 							     .bno(5L)
 				                 .title("서비스수정1")
 				                 .content("수정된 내용1")

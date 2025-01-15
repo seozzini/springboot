@@ -4,14 +4,16 @@ import java.util.List;
 
 public interface BoardService {
 
-	public void register(BoardDto board);
+	public void register(BoardDTO board);
 	
-	public boolean modify(BoardDto board);
+	public boolean modify(BoardDTO board);
 	
 	public boolean remove(Long bno);
 	
-	public BoardDto get(Long bno);
+	public BoardDTO get(Long bno);
 	
-	public List<BoardDto> getList();
+	public List<BoardDTO> getList(BoardSearchDTO searchDTO);
+	
+	int getCount(BoardSearchDTO searchDTO);
 
 }

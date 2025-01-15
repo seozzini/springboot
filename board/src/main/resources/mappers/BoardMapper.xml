@@ -33,7 +33,7 @@
    WHERE bno = #{bno}
 </delete>
 <!-- read: 단건조회 -->
-<select id="read" parameterType="long" resultType="boardDto">
+<select id="read" parameterType="long" resultType="boardDTO">
   SELECT bno,
          title,
          content,
@@ -42,17 +42,56 @@
     FROM tbl_board
    WHERE bno = #{bno}
 </select>
-<!-- getList : 전체조회 -->
 
+<!-- getList : 전체조회 -->
 <select id="getList">
-  SELECT bno,
-         title,
-         content,
-         writer,
-         regdate
-    FROM tbl_board
-   <![CDATA[
-   WHERE bno > 0
-   ]]>
+SELECT ROWNUM RN, BNO, TITLE, WRITER, REGDATE 
+FROM (
+       SELECT /*+index_desc(TBL_BOARD PK_BOARD)*/ 
+              ROWNUM RN, 
+              BNO, 
+              TITLE,
+              WRITER,
+              REGDATE
+         FROM tbl_board 
+      <![CDATA[
+      WHERE ROWNUM <= #{end}
+      ]]>
+      
+	  <include refid="criteria"></include>
+	
+) WHERE RN >= #{start}
 </select>
+
+<!-- 카운트 -->
+<select id="getCount" resultType="int">
+  SELECT COUNT(*) FROM TBL_BOARD
+  <where>
+	<include refid="criteria"></include>
+  </where>
+</select>
+
+<sql id="criteria">
+	<if test="keyword != null and ! keyword.equals('')">
+      <!-- item 은 루프변수, collection 은 array  -->
+		<trim prefix="and (" suffix=")" prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString() ">
+							TITLE like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString() ">
+							CONTENT like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString() ">
+							WRITER like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+	</if>
+</sql>
+
 </mapper>

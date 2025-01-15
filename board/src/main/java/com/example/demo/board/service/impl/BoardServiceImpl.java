@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.board.mapper.BoardMapper;
-import com.example.demo.board.service.BoardDto;
+import com.example.demo.board.service.BoardDTO;
+import com.example.demo.board.service.BoardSearchDTO;
 import com.example.demo.board.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,13 @@ public class BoardServiceImpl implements BoardService {
 	private final BoardMapper boardMapper;
 
 	@Override
-	public void register(BoardDto board) {
+	public void register(BoardDTO board) {
 		boardMapper.insert(board);
 		
 	}
 
 	@Override
-	public boolean modify(BoardDto board) {
+	public boolean modify(BoardDTO board) {
 		return boardMapper.update(board) == 1 ? true : false;
 	}
 
@@ -34,13 +35,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardDto get(Long bno) {
+	public BoardDTO get(Long bno) {
 		return boardMapper.read(bno);
 	}
 
 	@Override
-	public List<BoardDto> getList() {
-		return boardMapper.getList();
+	public List<BoardDTO> getList(BoardSearchDTO searchDTO) {
+		return boardMapper.getList(searchDTO);
+	}
+	
+	@Override
+	public int getCount(BoardSearchDTO searchDTO) {
+		return boardMapper.getCount(searchDTO);
 	}
 
 }

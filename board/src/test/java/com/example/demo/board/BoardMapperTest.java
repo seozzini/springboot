@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.board.mapper.BoardMapper;
-import com.example.demo.board.service.BoardDto;
+import com.example.demo.board.service.BoardDTO;
+import com.example.demo.board.service.BoardSearchDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class BoardMapperTest {
 	@DisplayName("게시글 등록")
 	public void testRegister() {
 		//given (변수선언)
-		BoardDto board = BoardDto.builder()
+		BoardDTO board = BoardDTO.builder()
 	   						   	 .title("등록")
 								 .content("내용")
 								 .writer("작성자")
@@ -41,7 +42,7 @@ public class BoardMapperTest {
 	public void testModify() {
 		//given
 		//실행전 존재하는 번호인지 확인할 것
-		BoardDto board = BoardDto.builder()
+		BoardDTO board = BoardDTO.builder()
 							     .bno(27L)
 				                 .title("등록했당")
 				                 .content("내용이당")
@@ -73,7 +74,7 @@ public class BoardMapperTest {
 		//given
 		Long bno = 1L;
 		//when
-		BoardDto board = boardMapper.read(bno);
+		BoardDTO board = boardMapper.read(bno);
 		//then
 		log.info(board.toString());
 		assertThat(bno).isEqualTo(board.getBno());
@@ -84,8 +85,11 @@ public class BoardMapperTest {
 	@DisplayName("게시글 전체조회")
 	public void testGetList() {
 		//given
+		BoardSearchDTO search = new BoardSearchDTO();
+		search.setStart(1);
+		search.setEnd(10);
 		//when
-		List<BoardDto> list = boardMapper.getList();
+		List<BoardDTO> list = boardMapper.getList(search);
 		//then
 		list.forEach(board -> log.info(board.toString()));
 		assertThat(list).isNotNull();
