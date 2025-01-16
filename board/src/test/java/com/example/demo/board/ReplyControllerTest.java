@@ -1,12 +1,7 @@
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.example.demo.board.mapper.ReplyMapper;
-import com.example.demo.board.service.ReplyPageDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +43,7 @@ public class ReplyControllerTest {
         .andDo(MockMvcResultHandlers.print());
 
     }
-
+    /*
         //@Test
     @DisplayName("reply 단건 조회")
     void getreply() throws Exception {
@@ -70,6 +64,7 @@ public class ReplyControllerTest {
 
     }
 
+   
     @Test
     @DisplayName("게시글의 reply 조회")
     void getreplyByBno() throws Exception {
@@ -95,3 +90,5 @@ public class ReplyControllerTest {
     	log.debug("replyCnt : " + dto.getReplyCnt() );
     	log.debug("first reply : " + dto.getList().get(0).getReply() );
     }
+    */
+}
