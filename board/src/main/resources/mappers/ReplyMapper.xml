@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.board.mapper.ReplyMapper">
+<!-- BoardMapper(인터페이스)를 구현한게 .xml이에용 -->
+<!-- insert: 등록 -->
+<insert id="insert" parameterType="replyDTO">
+  INSERT INTO tbl_reply (
+						rno,
+						bno,
+						reply,
+						replyer
+                        )
+       VALUES (
+               seq_reply.nextval,
+               #{bno},
+               #{reply},
+               #{replyer}
+               )
+</insert>
+<!-- update: 수정 -->
+<update id="update" parameterType="replyDTO">
+  UPDATE tbl_reply
+     SET 
+         reply = #{reply},
+         replyer = #{replyer},
+         updateDate = sysdate
+   WHERE rno = #{rno}
+</update>
+
+<!-- delete: 삭제 -->
+<delete id="delete">
+  DELETE FROM tbl_reply
+   WHERE rno = #{rno}
+</delete>
+
+<!-- read: 단건조회 -->
+<select id="read" parameterType="long" resultType="replyDTO">
+  SELECT rno,
+         bno,
+         reply,
+         replyer,
+         replydate,
+         updatedate
+    FROM tbl_reply
+   WHERE rno = #{rno}
+</select>
+
+<!-- getList : 전체조회 -->
+<select id="getList">
+	 <![CDATA[
+	       SELECT /*+index_desc(tbl_reply pk_reply)*/ 
+	              ROWNUM RN, 
+					 	 rno,
+						 bno,
+						 reply,
+						 replyer,
+						 replydate,
+						 updatedate
+	         FROM tbl_reply 
+	         WHERE bno = #{bno}
+	         and rno >0
+
+      ]]>
+
+</select>
+
+<!-- 게시글 건수 -->
+<select id="getCountByBno" resultType="int">
+
+      select count(rno)
+        from tbl_reply
+       where bno = #{bno}
+
+</select>
+
+<!-- 카운트 -->
+<select id="getCount" resultType="int">
+  SELECT COUNT(*) FROM tbl_reply
+  <where>
+	<include refid="criteria"></include>
+  </where>
+</select>
+
+
+
+<sql id="criteria">
+	<if test="keyword != null and ! keyword.equals('')">
+      <!-- item 은 루프변수, collection 은 array  -->
+		<trim prefix="and (" suffix=")" prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString() ">
+							TITLE like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString() ">
+							CONTENT like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString() ">
+							WRITER like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>	
+		</trim>
+	</if>
+</sql>
+
+</mapper>
