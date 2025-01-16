@@ -13,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
-public class BoardServiceTest {
+class BoardServiceTest {
 	@Autowired //알아서 인터페이스 구현클래스 찾아서 주입해줌
 	BoardService boardService;
-	
-	@Test
-	@DisplayName("게시글 수정")
-	public void update() {
+
+    @Test
+    @DisplayName("게시글 수정")
+    void update() {
 		//given
 		//실행전 존재하는 번호인지 확인할 것
 		BoardDTO board = BoardDTO.builder()

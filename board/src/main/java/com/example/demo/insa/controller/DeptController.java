@@ -27,7 +27,7 @@ public class DeptController {
 		}
 		
 		@GetMapping("get")
-		public DeptDTO get(@RequestParam(name="departmentId") String departmentId) {
+		public DeptDTO get(@RequestParam String departmentId) {
 			return deptService.get(departmentId);
 		}
 		

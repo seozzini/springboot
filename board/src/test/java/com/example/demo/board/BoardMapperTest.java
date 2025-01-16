@@ -80,10 +80,10 @@ public class BoardMapperTest {
 		assertThat(bno).isEqualTo(board.getBno());
 		assertThat(board).isNotNull();
 	}
-	
-	@Test
-	@DisplayName("게시글 전체조회")
-	public void testGetList() {
+
+    @Test
+    @DisplayName("게시글 전체조회")
+    void getList() {
 		//given
 		BoardSearchDTO search = new BoardSearchDTO();
 		search.setStart(1);

@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AutoConfigureMockMvc //가짜서버
 @SpringBootTest
-public class BoardControllerTest {
+class BoardControllerTest {
 	
 	@Autowired
 	MockMvc mvc;
