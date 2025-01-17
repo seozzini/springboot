@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.board.mapper.ReplyMapper">
-<!-- BoardMapper(인터페이스)를 구현한게 .xml이에용 -->
+<!-- ReplyMapper(인터페이스)를 구현한게 .xml이에용 -->
+
 <!-- insert: 등록 -->
 <insert id="insert" parameterType="replyDTO">
   INSERT INTO tbl_reply (
@@ -17,21 +18,6 @@
                #{replyer}
                )
 </insert>
-<!-- update: 수정 -->
-<update id="update" parameterType="replyDTO">
-  UPDATE tbl_reply
-     SET 
-         reply = #{reply},
-         replyer = #{replyer},
-         updateDate = sysdate
-   WHERE rno = #{rno}
-</update>
-
-<!-- delete: 삭제 -->
-<delete id="delete">
-  DELETE FROM tbl_reply
-   WHERE rno = #{rno}
-</delete>
 
 <!-- read: 단건조회 -->
 <select id="read" parameterType="long" resultType="replyDTO">
@@ -46,10 +32,10 @@
 </select>
 
 <!-- getList : 전체조회 -->
-<select id="getList">
-	 <![CDATA[
+<select id="getList" resultType="replyDTO">
+SELECT * FROM (
 	       SELECT /*+index_desc(tbl_reply pk_reply)*/ 
-	              ROWNUM RN, 
+	              ROWNUM rn, 
 					 	 rno,
 						 bno,
 						 reply,
@@ -58,22 +44,36 @@
 						 updatedate
 	         FROM tbl_reply 
 	         WHERE bno = #{bno}
-	         and rno >0
-
-      ]]>
-
-</select>
-
-<!-- 게시글 건수 -->
-<select id="getCountByBno" resultType="int">
-
-      select count(rno)
-        from tbl_reply
-       where bno = #{bno}
+	           and rno >0
+			   and rownum <![CDATA[ <= ]]> #{cri.end} 
+) where rn >= #{cri.start}			    
 
 </select>
+<!-- delete: 삭제(댓글 번호로 삭제) -->
+<delete id="delete">
+  DELETE FROM tbl_reply
+   WHERE rno = #{rno}
+</delete>
 
-<!-- 카운트 -->
+<!-- delete: 삭제(게시글 번호로 삭제) -->
+<delete id="deleteByBno">
+  DELETE FROM tbl_reply
+   WHERE bno = #{bno}
+</delete>
+
+
+<!-- update: 수정 -->
+<update id="update" parameterType="replyDTO">
+  UPDATE tbl_reply
+     SET 
+         reply = #{reply},
+         updateDate = sysdate
+   WHERE rno = #{rno}
+</update>
+
+
+
+<!-- 카운트 전체건수 -->
 <select id="getCount" resultType="int">
   SELECT COUNT(*) FROM tbl_reply
   <where>
@@ -81,6 +81,12 @@
   </where>
 </select>
 
+<select id="getCountByBno" resultType="int">
+  SELECT COUNT(rno) 
+  FROM tbl_reply 
+  WHERE bno=#{bno}
+
+</select>
 
 
 <sql id="criteria">

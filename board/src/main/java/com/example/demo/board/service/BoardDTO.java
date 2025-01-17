@@ -22,5 +22,7 @@ public class BoardDTO {
 	 private String writer;
 	 private Date regdate;
 	 
+	 private int replyCnt;
+	 
 	 //@Pattern("0\\d{3,4}-") 정규표현식 패턴검사 가능
 }

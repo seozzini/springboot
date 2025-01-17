@@ -3,7 +3,7 @@ package com.example.demo.insa.service;
 import lombok.Data;
 
 @Data
-public class EmpSearchDTO {
+public class EmployeesSearchDTO {
 	int start;
 	int end;
 	

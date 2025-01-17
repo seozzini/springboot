@@ -27,32 +27,45 @@
          updateDate = sysdate
    WHERE bno = #{bno}
 </update>
+
+<!-- update2: 수정2 -->
+<update id="updateReplyCnt">
+  UPDATE tbl_board
+     SET 
+         replycnt = replycnt + #{amount}
+   WHERE bno = #{bno}
+</update>
+
 <!-- delete: 삭제 -->
 <delete id="delete" parameterType="long">
   DELETE tbl_board
    WHERE bno = #{bno}
 </delete>
+
 <!-- read: 단건조회 -->
 <select id="read" parameterType="long" resultType="boardDTO">
   SELECT bno,
          title,
          content,
          writer,
-         regdate
+         regdate,
+         replycnt
+         
     FROM tbl_board
    WHERE bno = #{bno}
 </select>
 
 <!-- getList : 전체조회 -->
 <select id="getList">
-SELECT ROWNUM RN, BNO, TITLE, WRITER, REGDATE 
+SELECT ROWNUM RN, BNO, TITLE, WRITER, REGDATE, REPLYCNT 
 FROM (
        SELECT /*+index_desc(TBL_BOARD PK_BOARD)*/ 
               ROWNUM RN, 
               BNO, 
               TITLE,
               WRITER,
-              REGDATE
+              REGDATE,
+              REPLYCNT
          FROM tbl_board 
       <![CDATA[
       WHERE ROWNUM <= #{end}
