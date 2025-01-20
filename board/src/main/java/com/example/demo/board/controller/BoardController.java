@@ -1,5 +1,6 @@
 package com.example.demo.board.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import com.example.demo.board.service.BoardSearchDTO;
 import com.example.demo.board.service.BoardService;
 import com.example.demo.common.Paging;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	
 	private final BoardService service;
+	
+	@Autowired
+	HttpSession session;
 	
 	@GetMapping("/list")
 	public void list(Model model, 
@@ -88,6 +93,16 @@ public class BoardController {
 		rttr.addFlashAttribute("result", true);
 		rttr.addFlashAttribute("message","삭제" );
 		return "redirect:/board/list"; //위에 다 처리하고, redirect 만나면 재요청하라는 302와 주소를 보냄. client는 board/list 재요청 
+	}
+	
+	@GetMapping("/home")
+	public void home() {
+		
+	}
+	
+	@GetMapping("/login")
+	public void login() {
+		
 	}
 
 }

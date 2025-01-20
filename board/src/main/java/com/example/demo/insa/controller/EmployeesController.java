@@ -23,7 +23,7 @@ public class EmployeesController {
 	
 	private final EmployeesService employeesService;
 	
-	@GetMapping("list")
+	@GetMapping("/list")
 	public List<EmployeesDTO> list(Model model,
 								   BoardSearchDTO searchDTO,
 								   Paging paging) {
@@ -31,7 +31,7 @@ public class EmployeesController {
 	}
 	
 	//등록페이지로 이동
-	@GetMapping("register")
+	@GetMapping("/register")
 	public void register(EmployeesDTO emp) {}
 
 }

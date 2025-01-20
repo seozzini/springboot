@@ -44,6 +44,21 @@ WHERE employee_id = #{employeeId}
 
 <!-- getList : 전체조회 -->
 <select id="getList">
+SELECT  employee_id,
+	        first_name,
+	        last_name,
+	        email,
+	        phone_number,
+	        hire_date,
+	        job_id,
+	        salary,
+	        commission_pct,
+	        manager_id,
+	        department_id
+FROM employees
+</select>
+
+<!-- <select id="getList">
 SELECT ROWNUM RN, employee_id, first_name, last_name, email,
        phone_number,hire_date, job_id, salary,commission_pct,
 	   manager_id,department_id
@@ -67,6 +82,6 @@ FROM(
 	  <include refid="criteria"></include>
 	
 ) WHERE RN >= #{start}
-</select>
+</select> -->
 
 </mapper>

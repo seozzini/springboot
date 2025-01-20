@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -25,10 +25,13 @@
 				</thead>
 				
 				<tbody>
-					<tr> <!-- th:each로 반복 -->
-						<td class="text-center">100</td>
-						<td class="text-center">홍길동</td>
-						<td class="text-center">PROGRAMER</td>
+					<tr th:if=${list.empty} class="text-center"> <!-- th:each로 반복 -->
+						<td colspan="4">검색 결과가 없습니다.</td>
+			    	</tr>
+					<tr th:each=" emp : ${list} ">
+						<td class="text-center" th:text="${emp.employeeId}">100</td>
+						<td class="text-center" th:text="${emp.firstName}+${emp.lastName}}">홍길동</td>
+						<td class="text-center" th:text="${emp.jobId}">PROGRAMER</td>
 						<td class="text-center">
 							<button class="btnUpd">조회</button>
 							<button class="btnDel">삭제</button>
