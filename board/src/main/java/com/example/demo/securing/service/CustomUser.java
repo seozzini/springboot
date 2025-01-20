@@ -1,4 +1,4 @@
-package com.example.demo.board.service;
+package com.example.demo.securing.service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

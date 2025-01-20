@@ -2,8 +2,8 @@ package com.example.demo.securingweb;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.example.demo.board.service.CustomUser;
-import com.example.demo.board.service.UserDTO;
+import com.example.demo.securing.service.CustomUser;
+import com.example.demo.securing.service.UserDTO;
 
 
 

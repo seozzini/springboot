@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body layout:fragment="content">
+	<div class="container mt-4">
+		<div class="row">
+			<h2>사원 상세 정보</h2>
+			<table class="table text-center">
+
+				<tr>
+					<th class="text-center">사번</th>
+					<td th:text="${employees.employeeId}">100</td>
+				</tr>
+
+				<tr>
+					<th class="text-center">이름</th>
+					<td th:text="|${employees.firstName} ${employees.lastName}|">홍길동</td>
+				</tr>
+
+				<tr>
+					<th class="text-center">이메일</th>
+					<td th:text="${employees.email}">hong@example.com</td>
+				</tr>
+
+				<tr>
+					<th class="text-center">연락처</th>
+					<td th:text="${employees.phoneNumber}">010-0000-0000</td>
+				</tr>
+
+				<tr>
+					<th class="text-center">입사일</th>
+					<td th:text="${#dates.format(employees.hireDate, 'yyyy-MM-dd')}">2025-01-01</td>
+				</tr>
+
+				<tr>
+					<th>직무</th>
+					<td th:text="${employees.jobId}">PROGRAMER</td>
+				</tr>
+
+				<tr>
+					<th>연봉</th>
+					<td th:text="${employees.salary}">5000</td>
+				</tr>
+			</table>
+
+			<div class="d-flex justify-content-between">
+				<button class="btn btn-secondary" onclick="history.back()">뒤로가기</button>
+				<button class="btn btn-danger"
+					th:onclick="|location.href='/emp/delete?employeeId=${employees.employeeId}'|">사원
+					삭제</button>
+			</div>
+
+		</div>
+	</div>
+
+
+
+</body>
+
+</html>

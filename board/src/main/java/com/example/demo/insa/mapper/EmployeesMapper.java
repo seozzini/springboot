@@ -4,10 +4,23 @@ import java.util.List;
 
 import com.example.demo.insa.service.EmployeesDTO;
 import com.example.demo.insa.service.EmployeesSearchDTO;
+import com.example.demo.insa.service.JobsDTO;
 
 
 public interface EmployeesMapper {
-	EmployeesDTO read(int employeeId);
-	List<EmployeesDTO> getList(EmployeesSearchDTO searchDTO);
-	int getCount(EmployeesSearchDTO searchDTO);
+	//전체 조회
+	List<EmployeesDTO> getList();
+	
+	//단건 조회
+	public EmployeesDTO getOne(Long employeeId);
+	
+	
+	//등록
+	int insert(EmployeesDTO employeesDTO);
+	
+	// jobs 조회
+	public List<JobsDTO> getJobList();
+	
+	//삭제
+	public int delete(Long employeeId);
 }

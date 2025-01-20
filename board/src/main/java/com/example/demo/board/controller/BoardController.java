@@ -64,7 +64,8 @@ public class BoardController {
 		log.info("register: " + board);
 		service.register(board);
 		
-		rttr.addFlashAttribute("result", true);
+		//rttr.addAttribute("result", true); //파라미터 붙어서 나오는거
+		rttr.addFlashAttribute("result", true); //휘발성
 		rttr.addFlashAttribute("message","등록" );
 		return "redirect:/board/list"; //위에 다 처리하고, redirect 만나면 재요청하라는 302와 주소를 보냄. client는 board/list 재요청 
 	}
@@ -90,7 +91,8 @@ public class BoardController {
 		log.info("remove: " + bno);
 		service.remove(bno);
 		
-		rttr.addFlashAttribute("result", true);
+		//rttr.addAttribute("result", true); = 사라지지않고 계속 남아있음
+		rttr.addFlashAttribute("result", true); // 휘발성으로 한번만 출력되고 새로고침되면 사라짐
 		rttr.addFlashAttribute("message","삭제" );
 		return "redirect:/board/list"; //위에 다 처리하고, redirect 만나면 재요청하라는 302와 주소를 보냄. client는 board/list 재요청 
 	}

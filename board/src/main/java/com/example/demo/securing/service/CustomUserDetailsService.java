@@ -1,11 +1,11 @@
-package com.example.demo.board.service;
+package com.example.demo.securing.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.board.mapper.UserMapper;
+import com.example.demo.securing.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 

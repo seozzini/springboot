@@ -27,19 +27,20 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/main","/board/list").permitAll()
-				.requestMatchers("/emp/*","/dept/*").hasRole("ADMIN")
-				.anyRequest().authenticated()
+		            .requestMatchers("/", "/home", "/css/*","/js/*","/assets/*", "/board/list").permitAll()
+		            .requestMatchers("/emp/*","/dept/*").hasRole("ADMIN")
+		            .requestMatchers("/board/*").hasAnyRole("USER","ADMIN")
+		            .anyRequest().authenticated()
 				
 			)
 			.formLogin((form) -> form
-				.loginPage("/board/*")
-				.usernameParameter("userid")
-				.successHandler(authenticationSuccessHandler())
-				.permitAll()
+		            .loginPage("/login")
+		            .usernameParameter("userid")
+		            .successHandler(authenticationSuccessHandler())
+		            .permitAll()
 			)
 			.logout((logout) -> logout.permitAll())
-			//.csrf(csrf -> csrf.disable())
+			.csrf(csrf -> csrf.disable())
 			;
 
 		//static 에 페이지 만들어 이동
@@ -50,6 +51,7 @@ public class WebSecurityConfig {
 		return http.build();
 	}
 	
+	//로그인성공
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
 		return new CustomLoginSuccessHandler();

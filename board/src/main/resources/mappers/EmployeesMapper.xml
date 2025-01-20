@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.insa.mapper.EmployeesMapper">
 
+<!-- getList : 전체조회 -->
+<select id="getList">
+SELECT  /*+ INDEX_DESC(employees EMP_EMP_ID_PK) */
+            employee_id,
+	        first_name,
+	        last_name,
+	        email,
+	        phone_number,
+	        hire_date,
+	        job_id,
+	        salary,
+	        commission_pct,
+	        manager_id,
+	        department_id
+FROM employees
+ORDER BY employee_id DESC
+</select>
+
+
 <!-- insert: 등록 -->
 <insert id="insert" parameterType="employeesDTO">
   INSERT INTO employees (
@@ -12,21 +31,20 @@
 					        phone_number,
 					        hire_date,
 					        job_id
-
                         )
        VALUES (
-				#{employeeId},
+				EMPLOYEES_SEQ.nextval,
 		        #{firstName},
 		        #{lastName},
 		        #{email},
 		        #{phoneNumber},
-		        #{hireDate},
+		        NVL(#{hireDate}, sysdate),
 		        #{jobId}
                )
 </insert>
 
 <!-- 단건조회 -->
-<select id="read" parameterType="Long" resultType="employeesDTO">
+<select id="getOne" parameterType="Long" resultType="employeesDTO">
 SELECT employee_id,
         first_name,
         last_name,
@@ -42,21 +60,21 @@ FROM employees
 WHERE employee_id = #{employeeId}
 </select>
 
-<!-- getList : 전체조회 -->
-<select id="getList">
-SELECT  employee_id,
-	        first_name,
-	        last_name,
-	        email,
-	        phone_number,
-	        hire_date,
-	        job_id,
-	        salary,
-	        commission_pct,
-	        manager_id,
-	        department_id
-FROM employees
+<select id="getJobList" resultType="JobsDTO">
+	SELECT job_id,
+	       job_title,
+	       min_salary,
+	       max_salary
+    FROM jobs
 </select>
+
+<!-- 삭제 delete -->
+<delete id="delete" parameterType="Long">
+	DELETE FROM
+	employees
+	WHERE employee_id = #{employeeId}
+</delete>
+
 
 <!-- <select id="getList">
 SELECT ROWNUM RN, employee_id, first_name, last_name, email,

@@ -76,10 +76,9 @@
 			    <tr th:if="${list.empty}" class="text-center">
 			        <td colspan="4">검색 결과가 없습니다.</td>
 			    </tr>
-				<tr th:each=" board : ${list} ">
+				<tr th:each=" board : ${list} " th:onclick="|location.href='get?bno=${board.bno}'|" style="cursor: pointer;">
 					<td th:text="${board.bno}">1</td>
-					<td th:text="|${board.title} (${board.replyCnt})|" 
-					    th:onclick="|location.href='get?bno=${board.bno}'|">제목</td>
+					<td th:text="|${board.title} (${board.replyCnt})|" >제목</td>
 					<td th:text="${board.writer}">홍길동</td>
 					<td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd HH:mm')}">2025/01/06</td>
 				</tr>
