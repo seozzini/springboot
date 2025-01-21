@@ -60,6 +60,19 @@ FROM employees
 WHERE employee_id = #{employeeId}
 </select>
 
+<!-- update: 수정 -->
+<update id="update" parameterType="employeesDTO">
+  UPDATE employees
+     SET 
+         email = #{email},
+         phone_number = #{phoneNumber},
+         salary = #{salary},
+         commission_pct = #{commissionPct},
+         manager_id = #{managerId},
+         department_id = #{departmentId},
+   WHERE employee_id = #{employeeId}
+</update>
+
 <select id="getJobList" resultType="JobsDTO">
 	SELECT job_id,
 	       job_title,

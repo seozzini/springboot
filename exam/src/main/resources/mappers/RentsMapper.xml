@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.book.mapper.RentsMapper">
+<select id="getList" resultType="RentsDTO">
+select
+	b.book_no,
+	b.book_name,
+	l.rent_price,
+	l.rent_status
+from
+	book_tbl_06	b
+	        left join rent_tbl_06 l on l.book_no=b.book_no
+	</select>
+
+</mapper>

@@ -42,4 +42,9 @@ public class EmployeesServiceImpl implements EmployeesService {
 		return employeesMapper.getOne(employeeId);
 	}
 
+	@Override
+	public boolean modify(EmployeesDTO employees) {
+		return employeesMapper.update(employees) == 1 ? true : false;
+	}
+
 }

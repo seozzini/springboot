@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.board.service.BoardDTO;
 import com.example.demo.insa.service.EmployeesDTO;
 import com.example.demo.insa.service.EmployeesService;
 
@@ -36,6 +37,22 @@ public class EmployeesController {
 	@GetMapping("/read")
 	public void read(@RequestParam(name="employeeId") Long employeeId, Model model) {
 		model.addAttribute("employees", employeesService.getOne(employeeId));
+	}
+	
+	@GetMapping("/modify")
+	public void modify(@RequestParam(name="employeeId") Long employeeId, Model model) {
+		EmployeesDTO emp = employeesService.getOne(employeeId);
+		model.addAttribute("employees", emp);
+	}
+	
+	@PostMapping("/modify") //수정요청 호출(파라미터 가지고)
+	public String modify(@RequestParam(name="employeeId") Long employeeId, EmployeesDTO emp, RedirectAttributes rttr) {
+		log.info("modify: " + emp);
+		employeesService.modify(emp);
+		
+		rttr.addFlashAttribute("result", true);
+		rttr.addFlashAttribute("message","수정" );
+		return "redirect:/emp/list"; //위에 다 처리하고, redirect 만나면 재요청하라는 302와 주소를 보냄. client는 board/list 재요청 
 	}
 	
 	//job

@@ -16,4 +16,6 @@ public interface EmployeesService {
 	
 	public boolean remove(Long employeeId);
 	
+	public boolean modify(EmployeesDTO employees);
+	
 }

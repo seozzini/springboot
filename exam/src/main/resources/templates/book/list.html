@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body layout:fragment="content">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="panel-heading">
+          <button type="button" id="btnRegister" class="btn btn-info">도서 등록</button>
+        </div>
+        <h2>도서 조회/수정</h2>
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th class="text-center">도서번호</th>
+              <th class="text-center">도서명</th>
+              <th class="text-center">표지</th>
+              <th class="text-center">출판일자</th>
+              <th class="text-center">금액</th>
+              <th class="text-center">출판사</th>
+              <th class="text-center">도서소개</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="books : ${list}" th:onclick="|location.href='read?bookNo=${books.bookNo}'|">
+              <td th:text="${books.bookNo}">100</td>
+              <td th:text="${books.bookName}">도서명</td>
+			  <td><img th:src ="|/images/${books.bookCoverimg}|" style="width: 50px; height: auto;"></td>
+              <td th:text="${#dates.format(books.bookDate,'yyyy/MM/dd')}">출판일자</td>
+			  <td th:text="${#numbers.formatInteger(books.bookPrice, 0, 'COMMA')}">금액</td>
+              <td th:text="${books.bookPublisher}">출판사</td>
+              <td th:text="${books.bookInfo}">도서소개</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script th:inline="javascript">
+  const result = [[${result}]];
+  if(result){
+	  alert("도서등록이 완료 되었습니다.");
+  }
+    btnRegister.addEventListener("click", () => {
+      location.href = "register";
+    })
+
+  </script>
+
+</body>
+
+</html>
