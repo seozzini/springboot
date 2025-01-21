@@ -45,12 +45,20 @@ public class booksController {
 		model.addAttribute("books", booksService.getOne(bookNo));
 	}
 	
+	// 대여현황조회
+	@GetMapping("/rentList")
+	public void rentList (Model model) {
+		model.addAttribute("list", booksService.rentList());
+	}
+	
+	//수정페이지
 	@GetMapping("/modify")
 	public void modify(@RequestParam(name="bookNo") Long bookNo, Model model) {
 		BooksDTO books = booksService.getOne(bookNo);
 		model.addAttribute("books", books);
 	}
 	
+	//수정처리
 	@PostMapping("/modify") //수정요청 호출(파라미터 가지고)
 	public String modify(@RequestParam(name="bookNo") Long bookNo, BooksDTO books, RedirectAttributes rttr) {
 		log.info("modify: " + books);
@@ -69,23 +77,23 @@ public class booksController {
 		//System.out.println("books : "+books.toString());
 	}
 	
-	//등록
+	//등록처리
 	@PostMapping("/register")
 	public String register(@Validated BooksDTO books,
-						   BindingResult bindingResult,
-			               RedirectAttributes rttr) {
-		
-		 if(bindingResult.hasErrors()) { return "book/register"; }
-		
-		
-		log.info("register" + books);
-		
-		booksService.register(books);
-		
-		//rttr.addAttribute("result", true); //파라미터 붙어서 나오는거
-		rttr.addFlashAttribute("result", true); //휘발성
-		rttr.addFlashAttribute("message","등록" );
-		return "redirect:/book/list";
+	                       BindingResult bindingResult,
+	                       RedirectAttributes rttr,
+	                       Model model) {
+
+	    if (bindingResult.hasErrors()) {
+	        model.addAttribute("booksDTO", books);
+	        return "book/register";
+	    }
+
+	    booksService.register(books);
+
+	    rttr.addFlashAttribute("result", true);
+	    rttr.addFlashAttribute("message", "등록 성공");
+	    return "redirect:/book/list";
 	}
 	
 //삭제

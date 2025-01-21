@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.book.mapper.BooksMapper;
 import com.example.demo.book.service.BooksDTO;
 import com.example.demo.book.service.BooksService;
-import com.example.demo.book.service.RentsDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,10 +31,6 @@ public class BooksServiceImpl implements BooksService {
 		booksMapper.insert(books);
 	}
 
-	@Override
-	public List<RentsDTO> getRentList() {
-		return booksMapper.getRentList();
-	}
 
 	@Override
 	public boolean remove(Long bookNo) {
@@ -45,6 +40,11 @@ public class BooksServiceImpl implements BooksService {
 	@Override
 	public boolean modify(BooksDTO books) {
 		return booksMapper.update(books) == 1 ? true : false;
+	}
+
+	@Override
+	public List<BooksDTO> rentList() {
+		return booksMapper.rentList();
 	}
 
 //	@Override

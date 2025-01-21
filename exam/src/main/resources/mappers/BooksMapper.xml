@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.book.mapper.BooksMapper">
 
-<!-- getList : 전체조회 -->
+<!-- getList : book 전체조회 -->
 <select id="getList" resultType="booksDTO">
 SELECT *
 FROM book_tbl_06
@@ -13,6 +13,24 @@ ORDER BY book_no desc
 <select id="getNo" resultType="booksDTO">
 SELECT Max(book_no)+1 as book_no
 FROM book_tbl_06
+</select>
+
+<!-- rentList : rent 전체조회 -->
+<select id="rentList" resultType="booksDTO">
+SELECT
+	b.book_no,
+	b.book_name,
+	SUM(r.rent_price) as total_price,
+	COUNT(r.book_no) as rent_count
+FROM
+	book_tbl_06 b
+LEFT JOIN
+	rent_tbl_06 r ON b.book_no = r.book_no
+GROUP BY
+	b.book_no,
+	b.book_name
+ORDER BY
+	b.book_no
 </select>
 
 
@@ -41,7 +59,7 @@ FROM book_tbl_06
 <!-- 단건조회 -->
 <select id="getOne" parameterType="Long" resultType="booksDTO">
 SELECT *
-FROM employees
+FROM book_tbl_06
 WHERE book_no = #{bookNo}
 </select>
 
@@ -58,10 +76,6 @@ WHERE book_no = #{bookNo}
    WHERE book_no = #{bookNo}
 </update>
 
-<select id="getRentList" resultType="rentsDTO">
-	SELECT *
-    FROM RENT_TBL_06
-</select>
 
 <!-- 삭제 delete -->
 <delete id="delete" parameterType="Long">

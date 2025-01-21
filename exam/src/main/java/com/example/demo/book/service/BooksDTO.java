@@ -24,4 +24,7 @@ public class BooksDTO {
 	private Long bookPrice;  		//가격
 	private String bookPublisher;   //출판사
 	private String bookInfo;		//책정보
+	
+	private int totalPrice;			// 대여총계
+	private int rentCount;			// 대여횟수
 }

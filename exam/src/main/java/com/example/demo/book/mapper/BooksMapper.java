@@ -3,7 +3,6 @@ package com.example.demo.book.mapper;
 import java.util.List;
 
 import com.example.demo.book.service.BooksDTO;
-import com.example.demo.book.service.RentsDTO;
 
 
 public interface BooksMapper {
@@ -16,15 +15,18 @@ public interface BooksMapper {
 	//단건 조회
 	public BooksDTO getOne(Long bookNo);
 	
+	// 대여현황조회
+	public List<BooksDTO> rentList();
+	
 	//등록
 	int insert(BooksDTO booksDTO);
-	
-	// jobs 조회
-	public List<RentsDTO> getRentList();
+
 	
 	//삭제
 	public int delete(Long bookNo);
 	
 	//수정
 	int update(BooksDTO booksDTO);
+	
+	
 }
