@@ -1,6 +1,20 @@
-<th:block th:replace="~{layout/header}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
 <h1>스프링부트 인덱스</h1>
-<a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+<a th:href="@{/board/list(page=1,keyword='aaa')}">쿼리스트링</a>
+<a th:href="@{/board/{bno}/{page}/list(bno=101,page=1)}">PathVariable(url 파라미터)</a>
+<a href="/save" role="button" class="btn btn-primary">글 등록</a>
 
         <!-- 목록 출력 영역 -->
         <table class="table table-horizontal table-bordered">
@@ -16,7 +30,7 @@
 
                 <tr th:each="post : ${posts}">
                     <td>[[${post.id}]]</td>
-                    <td><a th:href="|/posts/update/${post.id}|">[[${post.title}]]</a></td>
+                    <td><a th:href="|/update/${post.id}|">[[${post.title}]]</a></td>
                     <td>[[${post.author}]]</td>
                     <td>[[${post.modifiedDate}]]</td>
                 </tr>
@@ -24,6 +38,7 @@
         </table>
         
         <!-- 페이징 시작 -->
+        <!--/*
  		<nav> 
 			<ul class="pagination" th:with="startPage=${T(java.lang.Math).floor(posts.number/10)}*10+1, 
 			                                endPage=(${posts.totalPages}>${startPage}+9) ? ${startPage}+9 :${posts.totalPages}">
@@ -45,8 +60,9 @@
 					th:href="|javascript:gopage(${posts.number}+2)|">Next</a>
 				</li>
 			</ul>
-		</nav>
-		<!-- 페이징 끝 -->
+		</nav>  */-->
+		<!-- 페이징 끝 -->  
+		 
        	<script th:inline="javascript">
 
 		
@@ -56,5 +72,6 @@
 			location.href = "/?page=" + p;
 		}
 	</script>
+</div>
 </body>
 </html>
