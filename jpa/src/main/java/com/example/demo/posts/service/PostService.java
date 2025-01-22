@@ -15,7 +15,9 @@ import com.example.demo.posts.web.dto.PostsUpdateRequestDto;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j 
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -38,8 +40,7 @@ public class PostService {
         return id;
     }
 	
-	//삭제
-	//delete(){}
+
 	
 	//전체조회
 	public List<PostsListResponseDto> findAll(){
@@ -58,7 +59,16 @@ public class PostService {
 	//단건조회
 	public PostResponseDto findById(Long id) {
 		Optional<Posts> post = postsRepository.findById(id); //notnull도 null처리하기 위해 자바에서 제공
+		log.info("id sevice::::::::::::"+id);
+		log.info("post sevice::::::::::::"+post.toString());
+		
 		return new PostResponseDto(post.get());		
+	}
+
+	//삭제
+	public void delete(Long id) {
+		postsRepository.deleteById(id);
+		//return postsRepository.deleteById(id);
 	}
 
 }

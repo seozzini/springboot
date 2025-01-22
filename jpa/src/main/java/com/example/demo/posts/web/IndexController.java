@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.posts.service.PostService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 //뷰페이지로 넘겨주는 메소드 모여있음
 @RequiredArgsConstructor
 @Controller
@@ -34,7 +36,8 @@ public class IndexController {
 	public String update(Model model,
 						 @PathVariable(name="id") Long id) {
 		//단건조회(모델에 담아야함)
-		model.addAttribute("posts", postService.findById(id));
+		log.info("id:::::::: "+id);
+		model.addAttribute("post", postService.findById(id));
 		return "posts-update";
 	}
 }
