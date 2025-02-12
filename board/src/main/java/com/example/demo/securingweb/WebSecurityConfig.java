@@ -27,7 +27,7 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-		            .requestMatchers("/", "/home", "/css/*","/js/*","/assets/*", "/board/list").permitAll()
+		            .requestMatchers("/", "/home", "/css/*","/js/*","/assets/*", "/board/list","/api/**").permitAll()
 		            .requestMatchers("/emp/*","/dept/*").hasRole("ADMIN")
 		            .requestMatchers("/board/*").hasAnyRole("USER","ADMIN")
 		            .anyRequest().authenticated()
@@ -40,8 +40,11 @@ public class WebSecurityConfig {
 		            .permitAll()
 			)
 			.logout((logout) -> logout.permitAll())
-			.csrf(csrf -> csrf.disable())
-			;
+            .csrf(csrf -> csrf.disable())  // CSRF 비활성화
+            .cors(cors -> cors
+                    .configurationSource(CorsConfig.corsConfigurationSource())
+            );
+            ;
 
 		//static 에 페이지 만들어 이동
 		//http.exceptionHandling(ex -> ex.accessDeniedPage("/error403.html"));
@@ -80,4 +83,7 @@ public class WebSecurityConfig {
 
 		return new InMemoryUserDetailsManager(user,admin);
 	}
+	
+
+	
 }
